@@ -1,0 +1,253 @@
+⁡⁣⁣⁢NodeJS Introduction⁡
+Before 2009, JS was only available for the browsers, and every browser was competing with each other for in terms of speed and executing the JS code. For that, The needed a JS Engine. Every browser came up with its own Engine. A Javascript Engine is a software component that executes Javascript code, So the faster the engine, the faster the browser.
+Chrome: uses V8 Engine (the fastest because it executes using c++)
+MS Edge: uses Chakra Core.
+Firefox: uses Spider Monkey Engine
+
+As at 2009: a man named Ryan Dahl introduced the NodeJS using the V8 engine.
+
+NodeJS is a free and open source runtime for Javascript, and works on a single thread at a time; meaning you can only do 1 task at a time.
+Javascript executes the code, while nodeJS has additional server modules eg filesystem, http, os, etc. which were created using combination of (c, c++, and Javascript), which makes it extremely fast.
+
+
+⁡⁣⁣⁢Features of NodeJS:⁡
+--> NodeJS is not a programming Language or a Framework.
+--> NodeJS is a runtime environment for executing Javascript code.
+--> NodeJS is ASYNCHRONOUS/Non-blocking in nature.
+  -> its a single threaded platform designed to handle multiple requests.
+  -> NodeJS apps are ASYNCHRONOUS by nature.
+--> NodeJS is ideal for I/O-intensive apps and highly scalable.
+--> Do not use Node for CPU-intensive apps.
+
+
+⁡⁣⁣⁢Async nature of nodeJS:
+-> NodeJs is asynchronous in nature.
+  ⁡asynchronous means no wait. ie; task B doesn't depends on task A.
+  Synchronous means to wait.
+
+
+⁡⁣⁣⁢Difference between Browser JS and NodeJs:⁡
+1: Browser JS has the DOM, NodeJS doesn't have DOM
+2: Browser JS has the Window elements, NodeJS doesn't have Window elements.
+3: Browser offers interactive apps, NodeJS offers Server-side apps.
+4: Browser doesn't have filesystem, NodeJS has the filesystem.
+5: Browser => ES6 modules, NodeJS => commonJS.
+
+
+
+
+
+
+Notes ===>
+    node --v ==> to check currently installed NodeJS version.
+    
+
+⁡⁢⁣⁢==========> Node Module System <==========⁡
+in node every file is a Module. and the functions and variables defined in that file are a scope to that module only.
+
+⁡⁣⁣⁢1: =====> create any .js file eg: app.js and console.log(module)⁡
+  ⁡⁣⁣⁢CREATING A MODULE:⁡
+    console.log(module) ---> outputs:
+                        Module {
+                          id: '.',
+                          path: '/home/dking/node-course/first-app',
+                          exports: {},
+                          filename: '/home/dking/node-course/first-app/app.js',
+                          loaded: false,
+                          children: [],
+                          paths: [
+                            '/home/dking/node-course/first-app/node_modules',
+                            '/home/dking/node-course/node_modules',
+                            '/home/dking/node_modules',
+                            '/home/node_modules',
+                            '/node_modules'
+                          ]
+                        }
+    all these are within the scope of this file alone, so in order to make these visible in other files, you can then call the: module.exports.anyvalue or object or function or randomname = the particular value.
+
+    example: in another .js file for example log.js: 
+            const url = "https://google.com"
+
+            function log(message) {
+              console.log(message)
+            }
+
+            to make the url or function visible from the outside of this file:
+              module.exports.url = url
+              or it doesn't have to be same name to be called from the outside.
+              module.exports.myUrl = url
+              or
+              exports.myUrl = url
+
+              module.exports.log = log
+              or
+              exports.log = log
+
+  ⁡⁣⁣⁢LOADING A MODULE:⁡
+    we use the require('specify the path of the module/file u want to call..')
+    eg: 
+      let logger = require('./logger')
+      console.log(logger) ---> outputs the value/file type you are calling. ie { log: [Function: log] }
+
+    To load a function:
+      logger.the function name() --> logger.log() --> outputs your function.
+      or
+      require('./logger').log() --> outputs you function
+
+    or you can return a single function:
+      in the function.js file:
+        function sum(a,b) {
+          return a + b
+        }
+        // export the function
+        module.exports = sum
+
+      in the app.js file:
+        const callSum = require("./logger")
+        // to call the function
+        console.log(callSum(5, 9))
+
+  MODULE WRAPPER FUNCTION:
+    (function (exports, require, module, __filename, __dirname)) {
+
+    }
+
+
+
+⁡⁢⁣⁢2: =====> Path Module =====>⁡
+Some of the Useful nodeJS modules you should know:
+    -> File System => to work with files.
+    -> HTTP => creating web servers that listens for http requests.
+    -> OS => to work with the Operating System.
+    -> Path => gives us a bunch of utility functions for working with paths.
+    -> Process => gives us info about the latest process running.
+    -> Query Strings => useful in building http services.
+    -> Stream => allows us work with streams of data.
+
+    i: Path Module:
+          syntax ==> const path = require('path')
+          // const path = require('path')
+
+          const pathObj = path.parse(__filename)
+          console.log(pathObj)  // outputs info about this module file
+
+    ii: OS Module:
+          syntax ==> const os = require('os')
+          os.cpus(), os.freemem(), network ips etc.
+
+    iii: File System:
+            const fs = require('fs')
+
+          ==> Synchronous
+            console.log(fs.readdirSync('./'))  // displays all files in current folder.
+
+          ==> ASYNCHRONOUS
+            // it takes 2 args: the path and a callback function
+            fs.readdir('./', function (err, val) {
+              if (err) console.log('Error', err)
+              else console.log("Result:", val)
+            })
+
+            Note: Always use ASYNCHRONOUS method.....
+
+
+
+⁡⁣⁣⁢3: EVENT: a signal that indicate something has happened.⁡
+          // A Class: (blueprint) defines the properties and behavior of a concept.
+          // An Object is an actual instance of that class.
+
+          // initializing a class, EventEmitter
+          const EventEmitter = require('events')
+
+          // initializing an object
+          const emitter = new EventEmitter()
+
+
+          // Registering a listener for the event
+          // This has to come before the event declaration.
+          emitter.on("messageLogged", function() {
+            console.log("Listener called...")
+          })
+
+
+          // Raising an event using emit; means making a noise, producing or signalling
+          emitter.emit('messageLogged')
+
+
+4: EVENT Arguments:
+
+          // You can pass in arguments in the event i.e line 160
+
+          // Registering a listener for the event
+          // This has to come before the event declaration.
+          emitter.on("messageLogged", function(arg) {
+            console.log("Listener called...", arg)
+          })
+
+
+          // Raising an event using emit; means making a noise, producing or signalling
+          emitter.emit('messageLogged', {id: 1, url: "http://"})
+
+          or
+
+          // event class
+          const EventHandler = require('events')
+          // object of the class
+          const events = new EventHandler()
+
+          // listener
+          events.on('onConnected', item => {
+            console.log(item.age)
+          })
+
+
+          // action/event
+          events.emit("onConnected", {data: 'message', age: 15})  // this returns value of age which is ==> 15
+
+
+
+
+5: HTTP Module
+      ⁡⁣⁣⁢Creating a HTTP server, then listening for an event or connection...
+          // importing the http module⁡
+          const http = require('http')
+          // creating a server
+          const server = http.createServer()
+
+          // listener/handler
+          server.on('connection', (socket) => {
+            console.log("someone connected...")
+          })
+
+          server.listen(3000)
+          console.log("Listening on port 3000...")
+
+      ⁡⁣⁣⁢Displaying feedback on the page...⁡
+          const http = require('http')
+          // creating a server
+          const server = http.createServer((req, res) => {
+            if (req.url === '/') {
+              // using .write to display content on webpage
+              res.write("hello world")
+              res.end()
+            }
+
+          or
+
+        you can return a JSON file data.
+
+          const server = http.createServer((req, res) => {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+            data: 'Hello World!',
+            }));
+            });
+          })
+
+
+          server.listen(3000)
+          console.log("Listening on port 3000...")
+
+
+
+⁡⁣⁣⁢Create package.json file:⁡
