@@ -251,3 +251,179 @@ Some of the Useful nodeJS modules you should know:
 
 
 ⁡⁣⁣⁢Create package.json file:⁡
+  npm init -y ==> creates a package.json file, which is responsible for managing all the packages we import through npm.
+
+  npm init -y ==> outputs:
+      {
+        "name": "full_stack",
+        "version": "1.0.0",
+        "description": "",
+        "main": "auth.js",
+        "scripts": {
+          ⁡⁣⁣⁢"dev": "node auth.js"⁡
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/Elnatty/NodeJs.git"
+        },
+        "author": "",
+        "license": "ISC",
+        "bugs": {
+          "url": "https://github.com/Elnatty/NodeJs/issues"
+        },
+        "homepage": "https://github.com/Elnatty/NodeJs#readme"
+      }
+
+  we can edit the 'scripts' key to "dev" and its value as the .js file we are working on, and use the ==> npm run dev; to execute the script/file
+
+  Note: whenever the port number changes, we have to restart the server manually which is a pain in the ass. Hence we use the package.json file to do this automatically; we use the "nodemon" for this.
+
+
+⁡⁣⁣⁢Nodemon:⁡
+
+    nodemon is a tool that helps develop Node.js based applications by automatically restarting the node application when file changes in the directory are detected.
+
+    nodemon does not require any additional changes to your code or method of development. nodemon is a replacement wrapper for node. To use nodemon, replace the word node on the command line when executing your script.
+
+  ⁡⁢⁣⁣Installing nodemon as a global npm package in whole system/pc;⁡
+    run nodemon by: nodemon .js filename; eg nodemon auth.js
+
+    we can modify the "dev" vlaue in the package.json file to use nodemon instead of npm run. ie;
+          {
+            "name": "full_stack",
+            "version": "1.0.0",
+            "description": "",
+            "main": "auth.js",
+            "scripts": {
+              ⁡⁣⁣⁢"dev": "nodemon auth.js"⁡
+            },
+            "repository": {
+              "type": "git",
+              "url": "git+https://github.com/Elnatty/NodeJs.git"
+            },
+            "author": "",
+            "license": "ISC",
+            "bugs": {
+              "url": "https://github.com/Elnatty/NodeJs/issues"
+            },
+            "homepage": "https://github.com/Elnatty/NodeJs#readme"
+          }
+
+          then to run: npm run dev
+
+  ⁡⁢⁣⁣Installing nodemon as a dependency in  project;⁡
+      cmd: npm install nodemon
+        This adds as a dependencies in the package.json file.
+
+    after installing nodemon as a dependency, the node_modules folder and the package-lock.json file appears/becomes available.
+    
+    ⁡⁢⁣⁣The package-lock.json file⁡ locks all the versions of each dependencies we have inside the node_modules, so that whenever you want to reinstall the directory again, it doesn't take time to load the files again.
+
+
+
+
+⁡⁣⁣⁢HTTP Handle Routes:
+⁡   => to view routes we use the console.log(req.url).
+   => to specify content to display per routes, we use the if/else.
+
+      const PORT = 4040
+      const htt = require('http')
+      const { connected } = require('process')
+
+      const ser = htt.createServer((req, res) => {
+        ⁡⁢⁣⁣// view the specified routes⁡
+        console.log(req.url)
+
+        ⁡⁢⁣⁣// view the result for root/home route⁡
+        if (req.url === "/") {
+          res.write(`This is root folder..`)
+        }
+        if (req.url === "/about") {
+          res.write(`This is th about page..`)
+        }
+        ⁡⁢⁣⁣// specifying result for unsupported routes.⁡
+        else {
+          res.write(`ERROR 404! Page not found`)
+        }
+      })
+
+      ser.on('connection', socket => {
+        console.log("Someone connected..")
+      })
+
+      console.log(`server is running at http://localhost:${PORT}`)
+      ser.listen(PORT)
+
+
+
+⁡⁣⁣⁢Showing HTML Content⁡s:
+    ==> just specify what you want to display in html tags
+
+    const PORT = 4040
+    const htt = require('http')
+
+    const ser = htt.createServer((req, res) => {
+      if (req.url === '/') {
+        res.write(`Server on port ${PORT} is live..`)
+      }
+
+      or
+      
+      if (req.url === '/about') {
+        res.writeHead(200, {"Content-type": "text/html"})
+        res.write(`<h1>I am displaying on the about page..</h1>`)
+      }
+      else {
+        ⁡⁢⁣⁣// embed the message in html tags⁡
+        res.write(`<h1>ERROR 404! Page not found</h1>`)
+      }
+
+      res.end()
+    })
+
+    ser.on('connection', socket => {
+      console.log("Someone connected..")
+    })
+
+
+    console.log(`server is running at http://localhost:${PORT}`)
+    ser.listen(PORT)
+
+
+
+⁡⁣⁣⁢File System Module ReadFIle⁡:
+    ==> invoke the 'fs' import method:
+        const fs = require('fs)
+    ==> then fs.readFile('file location', (err, data) => {
+      
+      // handle any error with the if/else statement
+      if (err) throw err
+      
+      // then write the data.
+      res.write(data)
+    })
+
+    Example:
+
+    const http = require('http')
+    const fs = require("fs")
+
+    http.createServer((req, res) => {
+      if (req.url === "/") {
+        // specify the .html file location.
+        fs.readFile("index.html", (err, data) => {
+          if (err) throw err
+          res.write(data)
+          res.end()
+        })
+      }
+
+    }).listen(2000).on('connection', (stream) => {
+      console.log('someone connected!')
+    })
+    console.log("http://localhost:2000")
+
+
+
+⁡⁣⁣⁢FS Write Large File⁡:
+      
