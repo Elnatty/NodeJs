@@ -1,4 +1,7 @@
-⁡⁣⁣⁢NodeJS Introduction⁡
+nodejs.dev --> check documentation for more information.⁡⁣⁣
+
+
+⁢NodeJS Introduction⁡
 Before 2009, JS was only available for the browsers, and every browser was competing with each other for in terms of speed and executing the JS code. For that, The needed a JS Engine. Every browser came up with its own Engine. A Javascript Engine is a software component that executes Javascript code, So the faster the engine, the faster the browser.
 Chrome: uses V8 Engine (the fastest because it executes using c++)
 MS Edge: uses Chakra Core.
