@@ -410,11 +410,12 @@ Some of the Useful nodeJS modules you should know:
 
     http.createServer((req, res) => {
       if (req.url === "/") {
-        // specify the .html file location.
+        ⁡⁢⁣⁣// specify the .html file location.⁡
         fs.readFile("index.html", (err, data) => {
           if (err) throw err
           res.write(data)
-          res.end()
+          // data/html elements can also be put in the .end() method to display html content on webpage. example;
+          res.end(data)
         })
       }
 
@@ -426,4 +427,97 @@ Some of the Useful nodeJS modules you should know:
 
 
 ⁡⁣⁣⁢FS Write Large File⁡:
+      const http = require('http')
+      const fs = require('fs')
+      const PORT = 5000
+
+
+      http.createServer((req, res) => {
+        if (req.url === '/') {
+          fs.readFile('root/home.html', (err, data) => {
+            res.write(data)
+            res.end()
+          })
+        }
+        else if (req.url === '/about') {
+          fs.readFile('root/about.html', (err, data) => {
+            res.write(data)
+            res.end()
+          })
+        }
+        else if (req.url === '/createFile') {
+            ⁡⁢⁣⁣// using the .writeFIle; create a path, the specify the ⁡⁢⁣⁣data and (err) callback. A folder named temp i created then with the test.html inside it.
+            const data = ⁡"<h1>This is a test file</h1>"
+            fs.writeFile("temp/test.html", data, (err) => {
+              if (err) throw err
+              res.write("File has been created..")
+              res.end()
+            })
+        }
+
+        ⁡⁣⁣⁢you can add a for loop:⁡
+
+        const data = "<h1>This is a test file appended..</h1>"
+        // to append the data file 20 times.
+        for (let i=0; i<20; i++) {
+            fs.appendFile("temp/test.html", data, (err) => {
+            if (err) throw err
+          })
+        }
+
+        ⁡⁣⁣⁢and display on webpage:⁡
+
+        // display content 20 times on webpage.
+        if (req.url === '/createFile') {
+          const data = "<h1>This is a test file appended..</h1>"
+
+          for (let i=0; i<20; i++) {
+            fs.appendFile("temp/test.html", data, (err) => {
+            if (err) throw err
+          })
+        }
+        
       
+      Note: fs.writeFIle writes new content to the file, appendFile appends new content to a file.
+
+
+
+⁡⁣⁣⁢Event Loop Explanation:⁡⁡
+    From the features of nodeJS, we found out that nodeJS:
+    --> can be asynchronous and have non-blocking I/Object
+    --> it runs on a single thread.
+    These is a limitation, hence; this limitation was converted into a helpful feature using the Event Loop and Call Stack system.
+
+    Event Loop: continuously checking the callstack to see if there is any function that needs to run.
+      ⁡⁢⁣⁣example:⁡
+          const func1 = () => console.log("func1")
+          const func2 = () => console.log("func2")
+          const func3 = () => {
+            console.log("func3")
+            func1() //--> will be executed from the callstack .
+            func2() //--> this will also be executed from callstack.
+
+            // but when we use the setTimeout() function, nodeJS keeps it in the callstack for last, then executes others before going back to the setTimeout function, example;
+
+            setTimeout(func1, 0)
+
+            // even after a promise is defined, it still gets called from the callstack before the setTimeout() function. Y is this??
+
+            new Promise((resolve, reject) => {
+              resolve("I am a promise")
+            }).then(res => console.log(res))
+          }
+
+          results: 
+                  func3
+                  func2
+                  I am a promise
+                  func1
+
+
+
+Event Loop Task Sequence:
+    event task loop execution:
+      1: mini tasks -> eg nextTick()
+      1: micro tasks -> eg promise()
+      1: macro tasks -> eg setTimeout() or setInterval etc..
