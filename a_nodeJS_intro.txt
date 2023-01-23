@@ -42,7 +42,14 @@ Javascript executes the code, while nodeJS has additional server modules eg file
 
 
 Notes ===>
+  Install node:
+    sudo apt-get install nodejs
+    sudo apt install npm
     node --v ==> to check currently installed NodeJS version.
+    npm -v   ==> to check currently installed npm version.
+  Uninstall node:
+    sudo apt remove nodejs
+    sudo apt remove npm
     
 
 ⁡⁢⁣⁢==========> Node Module System <==========⁡
@@ -291,7 +298,7 @@ Some of the Useful nodeJS modules you should know:
   ⁡⁢⁣⁣Installing nodemon as a global npm package in whole system/pc;⁡
     run nodemon by: nodemon .js filename; eg nodemon auth.js
 
-    we can modify the "dev" vlaue in the package.json file to use nodemon instead of npm run. ie;
+    we can modify the "dev" value in the package.json file to use nodemon instead of npm run. ie;
           {
             "name": "full_stack",
             "version": "1.0.0",
