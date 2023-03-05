@@ -52,11 +52,11 @@ Notes ===>
     sudo apt remove npm
     
 
-⁡⁢⁣⁢==========> Node Module System <==========⁡
+==========> Node Module System <==========⁡
 in node every file is a Module. and the functions and variables defined in that file are a scope to that module only.
 
-⁡⁣⁣⁢1: =====> create any .js file eg: app.js and console.log(module)⁡
-  ⁡⁣⁣⁢CREATING A MODULE:⁡
+1: =====> create any .js file eg: app.js and console.log(module)
+  CREATING A MODULE:⁡
     console.log(module) ---> outputs:
                         Module {
                           id: '.',
@@ -93,7 +93,7 @@ in node every file is a Module. and the functions and variables defined in that 
               or
               exports.log = log
 
-  ⁡⁣⁣⁢LOADING A MODULE:⁡
+  LOADING A MODULE:⁡
     we use the require('specify the path of the module/file u want to call..')
     eg: 
       let logger = require('./logger')
@@ -124,7 +124,7 @@ in node every file is a Module. and the functions and variables defined in that 
 
 
 
-⁡⁢⁣⁢2: =====> Path Module =====>⁡
+2: =====> Path Module =====>⁡
 Some of the Useful nodeJS modules you should know:
     -> File System => to work with files.
     -> HTTP => creating web servers that listens for http requests.
@@ -162,7 +162,7 @@ Some of the Useful nodeJS modules you should know:
 
 
 
-⁡⁣⁣⁢3: EVENT: a signal that indicate something has happened.⁡
+3: EVENT: a signal that indicate something has happened.⁡
           // A Class: (blueprint) defines the properties and behavior of a concept.
           // An Object is an actual instance of that class.
 
@@ -260,7 +260,7 @@ Some of the Useful nodeJS modules you should know:
 
 
 
-⁡⁣⁣⁢Create package.json file:⁡
+Create package.json file:⁡
   npm init -y ==> creates a package.json file, which is responsible for managing all the packages we import through npm.
 
   npm init -y ==> outputs:
@@ -270,7 +270,7 @@ Some of the Useful nodeJS modules you should know:
         "description": "",
         "main": "auth.js",
         "scripts": {
-          ⁡⁣⁣⁢"dev": "node auth.js"⁡
+          ⁡⁣⁣"dev": "node auth.js"⁡
         },
         "repository": {
           "type": "git",
@@ -332,7 +332,7 @@ Some of the Useful nodeJS modules you should know:
 
 
 
-⁡⁣⁣⁢HTTP Handle Routes:
+HTTP Handle Routes:
 ⁡   => to view routes we use the console.log(req.url).
    => to specify content to display per routes, we use the if/else.
 
@@ -366,7 +366,7 @@ Some of the Useful nodeJS modules you should know:
 
 
 
-⁡⁣⁣⁢Showing HTML Content⁡s:
+Showing HTML Contents:
     ==> just specify what you want to display in html tags
 
     const PORT = 4040
@@ -401,7 +401,7 @@ Some of the Useful nodeJS modules you should know:
 
 
 
-⁡⁣⁣⁢File System Module ReadFIle⁡:
+File System Module ReadFIle:
     ==> invoke the 'fs' import method:
         const fs = require('fs)
     ==> then fs.readFile('file location', (err, data) => {
@@ -436,7 +436,7 @@ Some of the Useful nodeJS modules you should know:
 
 
 
-⁡⁣⁣⁢FS Write Large File⁡:
+FS Write Large File:
       const http = require('http')
       const fs = require('fs')
       const PORT = 5000
@@ -456,7 +456,7 @@ Some of the Useful nodeJS modules you should know:
           })
         }
         else if (req.url === '/createFile') {
-            ⁡⁢⁣⁣// using the .writeFIle; create a path, the specify the ⁡⁢⁣⁣data and (err) callback. A folder named temp i created then with the test.html inside it.
+            ⁡⁢⁣// using the .writeFIle; create a path, the specify the data and (err) callback. A folder named temp i created then with the test.html inside it.
             const data = ⁡"<h1>This is a test file</h1>"
             fs.writeFile("temp/test.html", data, (err) => {
               if (err) throw err
@@ -465,7 +465,7 @@ Some of the Useful nodeJS modules you should know:
             })
         }
 
-        ⁡⁣⁣⁢you can add a for loop:⁡
+        ⁡⁣⁣you can add a for loop:⁡
 
         const data = "<h1>This is a test file appended..</h1>"
         // to append the data file 20 times.
